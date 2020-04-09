@@ -90,4 +90,11 @@ public class BoardService {
 		String x=request.getParameter("seq");
 		dao.deleteBoard(Integer.parseInt(x));
 	}
+	
+	public int insertReplyService(Reply reply) {
+		return dao.insertReply(reply);
+	}
+	public List<Reply> listReplyService(int seq){
+		return dao.listReply(seq);
+	}
 }

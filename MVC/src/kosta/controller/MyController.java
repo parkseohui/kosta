@@ -15,6 +15,7 @@ import kosta.action.DeleteAction;
 import kosta.action.DetailAction;
 import kosta.action.InsertAction;
 import kosta.action.InsertActionForm;
+import kosta.action.InsertReplyAction;
 import kosta.action.ListAction;
 import kosta.action.UpdateAction;
 //컨트롤러는 오지랖만 많은시키!!! 걔 일잘해!! 해서 액션한테 넘겨버림
@@ -88,6 +89,13 @@ public class MyController extends HttpServlet {
     	}else if(command.equals("updateAction.do")) {
     		System.out.println("gkgkgk");
     		action=new UpdateAction();
+    		try {
+    			forward=action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+    	}else if(command.equals("insertReplyAction.do")) {
+    		action=new InsertReplyAction();
     		try {
     			forward=action.execute(request, response);
 			} catch (Exception e) {

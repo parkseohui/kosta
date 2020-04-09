@@ -112,7 +112,40 @@ public class BoardDao2 {
 			}
 			
 		}
-	
+		public int insertReply(Reply reply) {
+			SqlSession sqlSession = getSqlSessionFactory().openSession();
+			int re=0;
+			try {
+				re=sqlSession.getMapper(BoardMapper.class).insertReply(reply);
+				if(re > 0) {
+					sqlSession.commit();
+				}else {
+					sqlSession.rollback();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				if(sqlSession != null) {
+					sqlSession.close();
+				}
+			}
+			return re;
+		}
+		
+		public List<Reply> listReply(int seq) {
+			List<Reply> list=null;
+			SqlSession sqlSession = getSqlSessionFactory().openSession();
+			try {
+			list=sqlSession.getMapper(BoardMapper.class).listReply(seq);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				if(sqlSession != null) {
+					sqlSession.close();
+				}
+			}
+			return list;
+		}
 }
 
 
