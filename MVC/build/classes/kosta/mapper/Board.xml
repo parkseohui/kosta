@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="kosta.mapper.BoardMapper">
+ 	<cache />
+	
+	<insert id="insertBoard" parameterType="Board">
+		insert into board values(board_seq.nextval, #{title},
+																
+																					#{writer},
+																					#{contents},
+																					sysdate,
+																					0)																					
+	</insert> 
+	
+	<select id="detailBoard" resultType="Board" parameterType="int">
+		select * from board where seq = #{seq}
+	</select>
+	
+	<select id="listBoard" parameterType="Search" resultType="Board">
+      select * from board 
+         <if test="area != null">
+            <where>
+               <!-- title LIKE %aa% OR writer LIKE %aa% -->
+               <foreach collection="area" item="item" open="(" separator="OR" close=")">
+                  ${item} LIKE #{searchKey}
+               </foreach>
+            </where>
+         </if>
+      order by seq desc
+   </select>
+	
+	<select id="countBoard" resultType="int" parameterType="Search">
+	select count(*) from board
+	 <if test="area != null">
+            <where>
+               <!-- title LIKE %aa% OR writer LIKE %aa% -->
+               <foreach collection="area" item="item" open="(" separator="OR" close=")">
+                  ${item} LIKE #{searchKey}
+               </foreach>
+            </where>
+         </if>
+      order by seq desc
+	</select>
+	 
+	 <delete id="deleteBoard" parameterType="int">
+	 delete from board where seq=${seq}
+	 </delete>
+	 
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
