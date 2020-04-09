@@ -47,8 +47,9 @@
 	</select>
 	 
 	 <delete id="deleteBoard" parameterType="int">
-	 delete from board where seq=${seq}
+	 delete from board where seq=#{seq}
 	 </delete>
+	 
 	 <insert id="insertReply" parameterType="Reply">
 	 insert into reply
 	 values(reply_seq.nextval,#{r_title},#{r_writer},#{r_contents}

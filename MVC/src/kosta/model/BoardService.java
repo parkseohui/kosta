@@ -88,6 +88,7 @@ public class BoardService {
 		System.out.println("22222222222");
 		request.setCharacterEncoding("utf-8");
 		String x=request.getParameter("seq");
+		System.out.println(x);
 		dao.deleteBoard(Integer.parseInt(x));
 	}
 	

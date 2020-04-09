@@ -12,8 +12,8 @@ public class DeleteAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = new ActionForward();
 		BoardService service = BoardService.getInstance();
-		System.out.println("111111111");
 		service.deleteBoardService(request);
+		
 		//실컷만들었는데 REQUEST셋팅안하면 못가져가 ㅠㅠㅠ
 		
 		forward.setRedirct(true);

@@ -36,13 +36,13 @@ public class MyController extends HttpServlet {
     	//경로 식별
     	//insertForm.do, insertAction.do, listAction.do, detailAction.do
     	//http://localhost:8081/MVC/board/insertForm.do 
-    	System.out.println(request);
-    	System.out.println(response);
+    //	System.out.println(request);
+    //	System.out.println(response);
     	String requestURI=request.getRequestURI(); //현재 uri를 구해주는 메소드
-    	System.out.println(requestURI);
+    //	System.out.println(requestURI);
     	//	/MVC/board/insertFrom.do
     	String contextPath=request.getContextPath(); //컨텍스트의 경로를 찾아주는 메소드
-    	System.out.println(contextPath);
+    	//System.out.println(contextPath);
     	String command=requestURI.substring(contextPath.length()+7); //insertFrom.do를 뽑기위한 작업입니다.
     	System.out.println(command);
     	
@@ -56,30 +56,33 @@ public class MyController extends HttpServlet {
     			forward=action.execute(request, response);
 			} catch (Exception e) {
 				// TODO: handle exception
+				e.printStackTrace();
 			}
     	}else if(command.equals("insertAction.do")) {
     		action=new InsertAction();
     		try {
 				forward=action.execute(request, response);
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			}
     	}else if(command.equals("listAction.do")) {
+    		System.out.println("listaction작동");
     		action=new ListAction();
     		try {
     			forward=action.execute(request, response);
 			} catch (Exception e) {
-				// TODO: handle exception
+				 e.printStackTrace();
 			}
     	}else if(command.equals("detailAction.do")) {
+    		System.out.println("디테일 액션작동");
     		action=new DetailAction();
     		try {
     			forward=action.execute(request, response);
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			}
     	}else if(command.equals("deleteAction.do")) {
-    		System.out.println("gkgkgk");
+    		System.out.println("딜리트액션작동");
     		action=new DeleteAction();
     		try {
     			forward=action.execute(request, response);

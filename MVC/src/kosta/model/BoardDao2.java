@@ -101,8 +101,9 @@ public class BoardDao2 {
 			System.out.println("ÀÎ»ý");
 			SqlSession sqlSession = getSqlSessionFactory().openSession();
 			try {
-				sqlSession.getMapper(BoardMapper.class).deleteBoard(seq);
-				
+				System.out.println("delete SEQ: "  + seq);
+				 sqlSession.getMapper(BoardMapper.class).deleteBoard(seq);
+				 sqlSession.commit();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}finally {
