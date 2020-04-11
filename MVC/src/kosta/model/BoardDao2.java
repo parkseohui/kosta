@@ -147,6 +147,26 @@ public class BoardDao2 {
 			}
 			return list;
 		}
+		
+		public int updateBoard(Board board) {
+			SqlSession sqlSession = getSqlSessionFactory().openSession();
+			int re=0;
+			try {
+				re=sqlSession.getMapper(BoardMapper.class).updateBoard(board);
+				if(re > 0) {
+					sqlSession.commit();
+				}else {
+					sqlSession.rollback();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				if(sqlSession != null) {
+					sqlSession.close();
+				}
+			}
+			return re;
+		}
 }
 
 

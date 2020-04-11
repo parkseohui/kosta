@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,23 +14,44 @@
    <table border="1">
       <tr>
          <td>글번호</td>
+         <td>이미지</td>
          <td>글제목</td>
          <td>작성자</td>
          <td>작성일자</td>
          <td>조회수</td>
       </tr>
 
-      <c:forEach var="b" items="${listModel.list}">
+      <c:forEach var="board" items="${listModel.list}">
       <tr>
-         <td>${b.seq }</td> <!-- detailAction.do 로 가는 이유는 데이터를 넘겨주기위해서 바로 jsp로 안가는 이유는 단순한 표현이기때문 -->
-         <td><a href="detailAction.do?seq=${b.seq}">${b.title}</a></td> 
-         <td>${b.writer}</td>
+         <td>${board.seq }</td> <!-- detailAction.do 로 가는 이유는 데이터를 넘겨주기위해서 바로 jsp로 안가는 이유는 단순한 표현이기때문 -->
+         <td>
+					<c:if test="${board.fname != null }">
+						<c:set var="head" value="${fn:substring(board.fname, 
+												0, fn:length(board.fname)-4) }"></c:set>
+						<c:set var="pattern" value="${fn:substring(board.fname, 
+						fn:length(head) +1, fn:length(board.fname)) }"></c:set>
+					<%-- <img src="/MVC/WebContent/upload/${head}_small.${pattern}"> --%>
+						<c:choose>
+							<c:when test="${pattern == 'jpg' || pattern == 'gif' }">
+								<img src="/MVC/upload/${head}_small.${pattern}">
+								
+							</c:when>
+							<c:otherwise>
+								<c:out value="NO IMAGE"></c:out>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+			</td>		
+         <td><a href="detailAction.do?seq=${board.seq}">${board.title}</a></td> 
+         
+         <td>${board.writer}</td>
+         
          <td>
          <!-- "2020-04-02 14:57:47" -->
-         <fmt:parseDate var="dt" value="${b.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+         <fmt:parseDate var="dt" value="${board.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/>
          <fmt:formatDate value="${dt}" pattern="yyyy/MM/dd"/>
          </td>
-         <td>${b.hitcount}</td>
+         <td>${board.hitcount}</td>
       </tr>
       
       </c:forEach>

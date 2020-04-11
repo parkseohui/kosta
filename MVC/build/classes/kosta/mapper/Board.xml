@@ -13,7 +13,8 @@
 																					#{writer},
 																					#{contents},
 																					sysdate,
-																					0)																					
+																					0,
+																					#{fname})																					
 	</insert> 
 	
 	<select id="detailBoard" resultType="Board" parameterType="int">
@@ -59,6 +60,10 @@
 	 <select id="listReply" parameterType="int" resultType="Reply">
 	 select * from reply where seq=#{seq}
 	 </select>
+	 
+	 <update id="updateBoard" parameterType="Board">
+	 update board set title=#{title}, contents=#{contents} where seq=#{seq}
+	 </update>
 </mapper>
 
 

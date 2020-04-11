@@ -1,9 +1,14 @@
 package kosta.model;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 
 public class BoardService {
 	// 서비스가 없어지면 Action부분이 복잡해지게된다
@@ -20,11 +25,45 @@ public class BoardService {
 
 	public int insertBoardService(HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
+		//파일 업로드 (경로,파일크기, 인코딩, 파일이름 중첩 정책)
+		String uploadPath=request.getRealPath("upload");
+		System.out.println(uploadPath);
+		//줄이 그어지는건 사용비권장일뿐 사용은 가능하다
+		int size=20*1024*1024;//20mb
+		MultipartRequest multi=
+				new MultipartRequest(request,uploadPath,size,
+						"utf-8",new DefaultFileRenamePolicy());
+		System.out.println(uploadPath);
 		Board board = new Board();
 
-		board.setContents(request.getParameter("contents"));
-		board.setTitle(request.getParameter("title"));
-		board.setWriter(request.getParameter("writer"));
+		board.setContents(multi.getParameter("contents"));
+		board.setTitle(multi.getParameter("title"));
+		board.setWriter(multi.getParameter("writer"));
+		board.setFname("");
+		
+		//파일업로드시 db(파일이름저장)
+		if(multi.getFilesystemName("fname")!=null) {
+			String fname=(String)multi.getFilesystemName("fname");
+			board.setFname(fname);
+			
+			//썸네일 이미지(gif,jpg) =>aa.gif, aa.jpg
+			String pattern = fname .substring(fname.indexOf(".")+1);//gif
+			String head=fname.substring(0, fname.indexOf("."));//aa
+			
+			//원본 file객체
+			String imagePath=uploadPath + "\\" + fname;
+			System.out.println(imagePath);
+			File src=new File(imagePath);
+			
+			//썸네일 file객체
+			String thumPath=uploadPath+"\\"+ head +"_small."+pattern;
+			File dest=new File(thumPath);
+			
+			if(pattern.equals("gif")||pattern.equals("jpg")) {
+				ImageUtil.resize(src,dest,100,ImageUtil.RATIO);
+			}
+		}
+		
 		return dao.insertBoard(board);
 	}
 
@@ -85,7 +124,6 @@ public class BoardService {
 	}
 	
 	public void deleteBoardService(HttpServletRequest request) throws Exception {
-		System.out.println("22222222222");
 		request.setCharacterEncoding("utf-8");
 		String x=request.getParameter("seq");
 		System.out.println(x);
@@ -97,5 +135,8 @@ public class BoardService {
 	}
 	public List<Reply> listReplyService(int seq){
 		return dao.listReply(seq);
+	}
+	public int updateBoardService(Board board) {
+		return dao.updateBoard(board);
 	}
 }

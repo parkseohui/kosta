@@ -16,4 +16,5 @@ public interface BoardMapper {
 	void deleteBoard(int seq);
 	int insertReply(Reply reply);
 	List<Reply> listReply(int seq);
+	int updateBoard(Board board);
 }

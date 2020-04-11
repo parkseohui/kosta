@@ -17,6 +17,7 @@
    <ul>
       <li>${ board.title }</li>
       <li>${ board.writer }</li>
+      <li><a href="/MVC/download.jsp?filename=${board.fname}">${board.fname}</a></li>
       <li>
          <!-- •2020-04-06 14:11:45 -->
          <fmt:parseDate var="date" value="${board.regdate }" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -61,7 +62,7 @@
    
    </form>
    
-   <a href="updateForm.jsp?seq=${ board.seq }">수정</a>
+   <a href="updateAction.do?seq=${ board.seq }">수정</a>
    <a href="deleteAction.do?seq=${ board.seq }">삭제</a>
    <!-- onclick="return deleteBtn();"  -->
    <h4><a href="listAction.do">글 목록 가기</a></h4>
