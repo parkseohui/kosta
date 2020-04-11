@@ -1,7 +1,7 @@
 <%@page import="kosta.model.BoardDao2"%>
 <%@page import="kosta.model.Board"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
     
     
 <!DOCTYPE html>
@@ -11,15 +11,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h3>±Û¼öÁ¤Æû</h3>
+	<h3>ê¸€ìˆ˜ì •í¼</h3>
 	<form action="realupdateAction.do" method="post">
 	<input type="hidden" name="seq" value="${board.getSeq()}">
-	ÀÛ¼ºÀÚ : <input type="text" name="writer" value="${board.getWriter()}"><br>
-	Á¦¸ñ : <input type="text" name="title" value="${board.getTitle()}"><br>
-	³»¿ë <br>
+	ì‘ì„±ì : <input type="text" name="writer" value="${board.getWriter()}"><br>
+	ì œëª© : <input type="text" name="title" value="${board.getTitle()}"><br>
+	ë‚´ìš© <br>
 	<textarea rows="6" cols="70" name="contents">${board.getContents()}</textarea>
 	<br>
-	<input type="submit" value="¼öÁ¤">
+	<input type="submit" value="ìˆ˜ì •">
 </form>
 </body>
 </html>

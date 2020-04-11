@@ -22,7 +22,6 @@ public class RealUpdateAction implements Action {
 		
 		service.updateBoardService(board);
 		
-		System.out.println("µÇ´Âµ¥;;;");
 		forward.setRedirct(true);
 		forward.setPath("listAction.do");
 		return forward;
